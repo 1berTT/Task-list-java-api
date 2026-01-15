@@ -18,9 +18,6 @@ public class FlywayMigrationInitializer implements ApplicationListener<ContextRe
     @Autowired
     private DataSource dataSource;
 
-    @Autowired(required = false)
-    private Flyway flyway;
-
     @Bean
     @DependsOn("dataSource")
     public Flyway flywayBean() {
@@ -37,6 +34,7 @@ public class FlywayMigrationInitializer implements ApplicationListener<ContextRe
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
+        Flyway flyway = event.getApplicationContext().getBean(Flyway.class);
         if (flyway != null) {
             System.out.println("=== EXECUTANDO FLYWAY MIGRATIONS ===");
             flyway.migrate();
