@@ -1,4 +1,4 @@
-package br.com.humbertodamasceno.providers;
+package br.com.humbertodamasceno.task_list.providers;
 
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,9 +9,9 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 @Service
-public class JWTUserProvider {
+public class JWTAdminProvider {
 
-    @Value("${security.token.secret.user}")
+    @Value("${security.token.secret.admin}")
     private String secretKey;
 
     public DecodedJWT validateToken(String token) {

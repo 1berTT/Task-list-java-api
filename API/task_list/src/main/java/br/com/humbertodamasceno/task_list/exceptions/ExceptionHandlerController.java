@@ -1,4 +1,4 @@
-package br.com.humbertodamasceno.exceptions;
+package br.com.humbertodamasceno.task_list.exceptions;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.context.MessageSource;

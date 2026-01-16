@@ -1,4 +1,4 @@
-package br.com.humbertodamasceno.exceptions;
+package br.com.humbertodamasceno.task_list.exceptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
