@@ -37,8 +37,9 @@ public class FlywayMigrationInitializer implements ApplicationListener<ContextRe
         Flyway flyway = event.getApplicationContext().getBean(Flyway.class);
         if (flyway != null) {
             System.out.println("=== EXECUTANDO FLYWAY MIGRATIONS ===");
-            flyway.migrate();
+            var result = flyway.migrate();
             System.out.println("=== FLYWAY MIGRATIONS CONCLUÍDAS ===");
+            System.out.println("=== MIGRATIONS APLICADAS: " + result.migrationsExecuted + " ===");
         }
     }
 }

@@ -1,4 +1,4 @@
-CREATE TABLE admin (
+CREATE TABLE "user" (
     id UUID PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
