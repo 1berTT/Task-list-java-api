@@ -1,0 +1,49 @@
+package br.com.humbertodamasceno.task_list.modules.user.entitites;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+import lombok.Data;
+
+@Data
+@Entity
+@Table(name = "users")
+public class UserEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id", columnDefinition = "UUID")
+    private UUID id;
+
+    @Length(min = 3, max = 255, message = "Name must be between 3 and 255 characters")
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    @Email(message = "Email must be a valid email")
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
+
+    @Length(min = 8, max = 255, message = "Password must be between 8 and 255 characters")
+    @Column(name = "password", nullable = false)
+    private String password;
+
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt;
+
+}
