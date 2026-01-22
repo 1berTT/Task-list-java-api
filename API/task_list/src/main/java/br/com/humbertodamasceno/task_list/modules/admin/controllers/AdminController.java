@@ -8,6 +8,7 @@ import br.com.humbertodamasceno.task_list.modules.admin.useCases.LoginAdminUseCa
 import br.com.humbertodamasceno.task_list.modules.admin.useCases.UpdateAdminUseCase;
 import br.com.humbertodamasceno.task_list.modules.admin.useCases.LoadUsersUseCase;
 import br.com.humbertodamasceno.task_list.modules.admin.useCases.DeleteUserUseCase;
+import br.com.humbertodamasceno.task_list.modules.admin.useCases.LoadAdminUseCase;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,6 +46,9 @@ public class AdminController {
 
     @Autowired
     private UpdateAdminUseCase updateAdminUseCase;
+
+    @Autowired
+    private LoadAdminUseCase loadAdminUseCase;
 
     @PostMapping("/create")
     public ResponseEntity<Object> createAdmin(@Valid @RequestBody AdminEntity adminEntity) {
@@ -99,6 +103,21 @@ public class AdminController {
 
             return ResponseEntity.ok().body(result);
 
+        } catch (Exception exception) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
+        }
+    }
+
+    @GetMapping("/load/{adminId}")
+    public ResponseEntity<Object> loadAdmin(@PathVariable UUID adminId, HttpServletRequest httpServletRequest) {
+        try {
+            if (httpServletRequest.getAttribute("admin_id") == null
+                    || !httpServletRequest.getAttribute("admin_id").equals(String.valueOf(adminId))) {
+                throw new AdminRuntimeExceptions("You are not authorized to load this admin");
+            }
+
+            var result = this.loadAdminUseCase.execute(adminId);
+            return ResponseEntity.ok().body(result);
         } catch (Exception exception) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
         }
