@@ -10,4 +10,6 @@ public interface CategoryTaskRepository extends JpaRepository<CategoryTaskEntity
     Optional<CategoryTaskEntity> findByName(String name);
 
     Optional<CategoryTaskEntity> findById(UUID id);
+
+    Optional<CategoryTaskEntity> findByNameAndUser_Id(String name, UUID userId);
 }
