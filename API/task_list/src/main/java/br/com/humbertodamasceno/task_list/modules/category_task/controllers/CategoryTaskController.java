@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -17,9 +18,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import br.com.humbertodamasceno.task_list.modules.category_task.DTOs.CategoryTaskRequestDTO;
 import br.com.humbertodamasceno.task_list.modules.category_task.DTOs.UpdateCategoryTaskDTO;
 import br.com.humbertodamasceno.task_list.modules.category_task.useCases.CreateCategoryTaskUseCase;
-import br.com.humbertodamasceno.task_list.modules.category_task.entities.CategoryTaskEntity;
 import br.com.humbertodamasceno.task_list.modules.category_task.useCases.LoadCategoryTaskByIdUseCase;
 import br.com.humbertodamasceno.task_list.modules.category_task.useCases.UpdateCategoryTaskUseCase;
+import br.com.humbertodamasceno.task_list.modules.category_task.useCases.DeleteCategoryTaskUseCase;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import br.com.humbertodamasceno.task_list.modules.category_task.useCases.ListCategoryTasksUseCase;
 
 @RestController
 @RequestMapping("/user/category")
@@ -33,6 +37,12 @@ public class CategoryTaskController {
 
     @Autowired
     private UpdateCategoryTaskUseCase updateCategoryTaskUseCase;
+
+    @Autowired
+    private DeleteCategoryTaskUseCase deleteCategoryTaskUseCase;
+
+    @Autowired
+    private ListCategoryTasksUseCase listCategoryTasksUseCase;
 
     @PostMapping("/create")
     public ResponseEntity<Object> createCategoryTask(@RequestBody CategoryTaskRequestDTO categoryTaskRequestDTO,
@@ -83,6 +93,36 @@ public class CategoryTaskController {
             return ResponseEntity.status(HttpStatus.OK).body(result);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteCategoryTask(@PathVariable String id, HttpServletRequest request) {
+        try {
+            var userId = request.getAttribute("user_id");
+            if (userId == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+            }
+            this.deleteCategoryTaskUseCase.execute(UUID.fromString(id), UUID.fromString((String) userId));
+            return ResponseEntity.status(HttpStatus.OK).body("Category task deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<Object> listAllCategoryTasks(
+            HttpServletRequest request,
+            @PageableDefault(size = 10, page = 0) Pageable pageable) {
+        try {
+            var userId = request.getAttribute("user_id");
+            if (userId == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+            }
+            var result = this.listCategoryTasksUseCase.execute(pageable, UUID.fromString((String) userId));
+            return ResponseEntity.status(HttpStatus.OK).body(result);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
