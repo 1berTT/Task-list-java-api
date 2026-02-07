@@ -1,15 +1,18 @@
 import { styled } from "styled-components";
 
-export const Container = styled.div`
+export const Container = styled.form`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: start;
   justify-content: center;
-  height: 100vh;
-  width: 100vw;
-  background-color: ${({ theme }) => theme.colors.primary};
+  width: 100%;
+  max-width: 120rem;
+  margin: 0 auto;
+  height: 100%;
+  padding: ${({ theme }) => theme.spacing.lg} ${({ theme }) => theme.spacing.xl};
+  gap: ${({ theme }) => theme.spacing.md};
 
   h1 {
-    color: ${({ theme }) => theme.colors.text.inverse};
+    color: ${({ theme }) => theme.colors.text.primary};
   }
 `;

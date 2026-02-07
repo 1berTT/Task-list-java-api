@@ -32,12 +32,12 @@ export const theme = {
     fontFamily: "'Inter', system-ui, sans-serif",
 
     sizes: {
-      xs: "0.75rem",
-      sm: "0.875rem",
-      md: "1rem",
-      lg: "1.125rem",
-      xl: "1.25rem",
-      xxl: "1.5rem",
+      xs: "1.2rem",   /* 12px */
+      sm: "1.4rem",   /* 14px */
+      md: "1.6rem",   /* 16px */
+      lg: "1.8rem",   /* 18px */
+      xl: "2rem",     /* 20px */
+      xxl: "2.4rem",  /* 24px */
     },
 
     weights: {
@@ -49,23 +49,23 @@ export const theme = {
   },
 
   spacing: {
-    xs: "4px",
-    sm: "8px",
-    md: "16px",
-    lg: "24px",
-    xl: "32px",
+    xs: "0.4rem",   /* 4px */
+    sm: "0.8rem",   /* 8px */
+    md: "1.6rem",   /* 16px */
+    lg: "2.4rem",   /* 24px */
+    xl: "3.2rem",   /* 32px */
   },
 
   radius: {
-    sm: "6px",
-    md: "10px",
-    lg: "16px",
-    full: "9999px",
+    sm: "0.6rem",    /* 6px */
+    md: "1rem",      /* 10px */
+    lg: "1.6rem",    /* 16px */
+    full: "999.9rem", /* 9999px */
   },
 
   shadow: {
-    sm: "0 1px 2px rgba(0,0,0,0.05)",
-    md: "0 4px 8px rgba(0,0,0,0.08)",
-    lg: "0 10px 20px rgba(0,0,0,0.12)",
+    sm: "0 0.1rem 0.2rem rgba(0,0,0,0.05)",
+    md: "0 0.4rem 0.8rem rgba(0,0,0,0.08)",
+    lg: "0 1rem 2rem rgba(0,0,0,0.12)",
   },
 } as const;
